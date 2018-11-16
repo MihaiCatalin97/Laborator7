@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DataLayer.Entities
 {
@@ -7,9 +8,10 @@ namespace DataLayer.Entities
     {
         public DateTime Date { get; private set; }
         public string Description { get; private set; }
+
+        [NotMapped]
         public double Total { get; private set; }
         public List<Products> Products { get; private set; }
-
 
         public ShoppingCart(DateTime date, string description)
         {
