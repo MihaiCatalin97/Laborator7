@@ -1,7 +1,6 @@
-﻿using System;
+﻿using DataLayer.Entities;
+using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using DataLayer.Entities;
 
 namespace BusinessLayer.Abstractions
 {

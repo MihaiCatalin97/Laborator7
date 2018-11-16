@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using BusinessLayer.Abstractions;
+﻿using BusinessLayer.Abstractions;
 using DataLayer;
 using DataLayer.Entities;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace BusinessLayer.Implementations
 {
@@ -11,9 +11,9 @@ namespace BusinessLayer.Implementations
     {
         protected readonly ApplicationContext _context;
 
-        protected Repository(ApplicationContext poiContext)
+        protected Repository(ApplicationContext context)
         {
-            _context = poiContext;
+            _context = context;
         }
 
         public void Create<T>(T entity) where T : BaseEntity
