@@ -24,8 +24,9 @@ namespace FullApplication
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(@"Server=(LocalDb)\MSSQLLocalDB;Database=Dotnet7;Trusted_Connection=True;"));
-            services.AddTransient<IRepository, Repository>();
+            services.AddTransient<IRepository, ProductRepository>();
             services.AddScoped<ProductRepository>();
+            services.AddScoped<ShoppingCartRepository>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 

@@ -17,6 +17,7 @@ namespace DataLayer.Entities
         {
             Date = date;
             Description = description;
+            Products = new List<Products>();
             Total = ComputeTotal();
         }
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using BusinessLayer.Abstractions;
 using BusinessLayer.Implementations;
 using DataLayer.Entities;
+using FullApplication.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FullApplication.Controllers
@@ -41,20 +42,59 @@ namespace FullApplication.Controllers
 
         // POST api/products
         [HttpPost]
-        public void Post([FromBody] string value)
+        public ActionResult<Products> Post([FromBody] ProductsModel productModel)
         {
+            if (productModel == null)
+            {
+                return BadRequest();
+            }
+            
+            Products products = new Products(productModel.Name, productModel.Price, productModel.Pieces);
+            _productRepository.Create(products);
+            _productRepository.Save();
+
+            return CreatedAtRoute("Post", new {Id = products.Id}, products);
         }
 
         // PUT api/products/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public ActionResult<ShoppingCart> Put(Guid id, [FromBody] ProductsModel productsModel)
         {
+            if (ModelState.IsValid == false)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var result = _productRepository.GetById<ShoppingCart>(id);
+
+            if (result == null)
+            {
+                return NotFound();
+            }
+
+            var newProducts = new Products(productsModel.Name, productsModel.Price, productsModel.Pieces);
+
+            _productRepository.Update<Products>(newProducts);
+            _productRepository.Save();
+
+            return Ok();
         }
 
         // DELETE api/products/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public ActionResult Delete(Guid id)
         {
+            var result = _productRepository.GetById<Products>(id);
+
+            if (result == null)
+            {
+                return NotFound();
+            }
+
+            _productRepository.Delete<Products>(result);
+            _productRepository.Save();
+
+            return Ok();
         }
 
     }

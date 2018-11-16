@@ -7,6 +7,8 @@ using System.Collections.Generic;
 
 namespace FullApplication.Controllers
 {
+    [Route("api/shoppingcarts")]
+    [ApiController]
     public class ShoppingCartController : ControllerBase
     {
         private readonly ShoppingCartRepository _shopppingCartRepository;
@@ -46,7 +48,10 @@ namespace FullApplication.Controllers
 
             var newShoppingCart = new ShoppingCart(shoppingCart.Date, shoppingCart.Description);
 
-            return CreatedAtAction(nameof(GetById), new { id = newShoppingCart.Id }, newShoppingCart);
+            _shopppingCartRepository.Create(newShoppingCart);
+            _shopppingCartRepository.Save();
+
+            return CreatedAtRoute("Post", new { Id = newShoppingCart.Id }, newShoppingCart);
         }
 
               
@@ -69,6 +74,7 @@ namespace FullApplication.Controllers
             var newShoppingCart = new ShoppingCart(shoppingCart.Date, shoppingCart.Description);
 
             _shopppingCartRepository.Update<ShoppingCart>(newShoppingCart);
+            _shopppingCartRepository.Save();
 
             return Ok();
         }
@@ -85,6 +91,7 @@ namespace FullApplication.Controllers
             }
 
             _shopppingCartRepository.Delete<ShoppingCart>(result);
+            _shopppingCartRepository.Save();
 
             return Ok();
         }
